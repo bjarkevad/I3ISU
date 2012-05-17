@@ -1,0 +1,4 @@
+#echo "Target"
+CXX=arm-angstrom-linux-gnueabi-g++
+AR=arm-angstrom-linux-gnueabi-ar
+OS=OS_LINUX
