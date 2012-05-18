@@ -16,6 +16,8 @@ CSmartString::CSmartString(const CSmartString &other)
 
 void CSmartString::operator =(const CSmartString &other)
 {
+		(*counter_)--;
+
     counter_ = other.counter_ ;
     str_ = other.str_;
     (*counter_)++;
