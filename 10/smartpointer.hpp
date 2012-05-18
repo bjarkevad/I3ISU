@@ -39,8 +39,12 @@ template<typename T> SmartPointer<T>::~SmartPointer() {
 }
 
 template<typename T> void SmartPointer<T>::operator=(const SmartPointer& other) {
-
-	(*counter_)--;
+	
+	if(this!= &other) {
+		(*counter_)--;
+			if((*counter_) == 0)
+				delete str_;
+	}
 
 	counter_ = other.counter_;
 	t = other.t;
