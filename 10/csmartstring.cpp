@@ -19,7 +19,7 @@ void CSmartString::operator =(const CSmartString &other)
 	
 	if(this!= &other) {
 		(*counter_)--;
-			if((*counter_) == 0)
+		if((*counter_) == 0)
 				delete str_;
 	}
 		counter_ = other.counter_ ;
