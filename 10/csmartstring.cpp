@@ -23,12 +23,12 @@ void CSmartString::operator =(const CSmartString &other)
 
 CSmartString::~CSmartString()
 {
-    (*counter_)--;
-	std::
-    if((*counter_) == 0) {
+    if((*counter_) == 1) {
         delete str_;
         delete counter_;
     }
+		else
+    	(*counter_)--;
 }
 
 std::string *CSmartString::get()
