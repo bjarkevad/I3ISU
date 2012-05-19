@@ -19,7 +19,8 @@ int main(int argc, char* argv[])
    else
      cout << "The 'ss' string does not contain 'World'" << endl;
 
-   //NOTE: SmartString ss2 = ss; // The SmartString class is non-copyable, this will not compile, neither will using a copy constructor
+   //NOTE: SmartString ss2 = ss; 
+   // The SmartString class is non-copyable, this will not compile, neither will using a copy constructor
 
    CSmartString css(new string("Hello Counted World.."));
    CSmartString css2(new string("Hello Counted World 2.."));
