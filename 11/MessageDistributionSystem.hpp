@@ -4,6 +4,7 @@
 #include <osapi/ScopedLock.hpp>
 #include <vector>
 #include <map>
+#include <iostream>
 
 namespace details
 {
@@ -54,6 +55,7 @@ class	MessageDistributionSystem : osapi::Notcopyable
 				{
 					M *tmp = new M(*m);
 					iterSubs->send(tmp);
+					std::cout << "Notified a subscriber.." << std::endl;
 				}
 				
 			}
@@ -98,7 +100,7 @@ class SubscriberHelper : osapi::Notcopyable
 	}
 
 	private:
-		const std::string& 	msgId_;
+		const std::string 	msgId_;
 		osapi::MsgQueue* 		mq_;
 		unsigned long				id_;
 };

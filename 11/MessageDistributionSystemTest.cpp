@@ -96,6 +96,7 @@ protected:
         
       case ID_TERMINATE:
         OSAPI_LOG_DBG("S(" << id_ << ") Got terminate signal");
+				subHelp_.unsubscribe();
         break;
     }
     
@@ -125,8 +126,7 @@ public:
 
 protected:
   // The subscription it self is missing and os is the unsubscription - Where will you put these?
-  enum { NOTIFY_TIMEOUT = 1000 
-  };
+  enum { NOTIFY_TIMEOUT = 1000 };
   
   virtual void preMsgHandler()
   {
@@ -177,19 +177,19 @@ int main(int argc, char* argv[])
   OSAPI_LOG_INF("Application starting up...");
 
   Publisher p;
-
-  /*Subscriber s1(1), s2(2);
+ 
+	Subscriber s1(1), s2(2);
   s1.start();
-  s2.start();*/
+  s2.start();
   p.start();
 
-	Subscriber subs[100];
+	/*Subscriber subs[100];
 	for( int i = 0 ; i< 100 ; i++ )
 	{
 		subs[i].start();
-	}
-	
- /* s1.join();
-  s2.join();*/
+	}*/
+	s2.stop();	
+  s1.join();
+  s2.join();
   p.join();
 }

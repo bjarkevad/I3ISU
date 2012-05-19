@@ -23,11 +23,13 @@ void MessageDistributionSystem::unSubscribe(const std::string& msgId,
 {
 	osapi::ScopedLock lock(m_);
 	//Search for message ID
+	std::cout << "unsubscribe called, searching for: " << msgId << std::endl;
 	SubscriberIdMap::iterator iter = sm_.find(msgId);
-
+	
 	//If message ID is found
 	if(iter != sm_.end())
 	{
+		std::cout << "Found message ID.." << std::endl;
 		//Get the associated SubscriberIdContainer
 		SubscriberIdContainer& subList = iter->second;
 		//Temp SubscriberId used for comparison
@@ -36,7 +38,10 @@ void MessageDistributionSystem::unSubscribe(const std::string& msgId,
 		SubscriberIdContainer::iterator idIter = find(subList.begin(), subList.end(), s);
 		//If we found any matches..
 		if(idIter != subList.end())
+		{
 			//..delete it
 			subList.erase(idIter);	
+			std::cout << "Deleted something..!" << std::endl;
+		}
 	}
 }
