@@ -16,15 +16,19 @@ CSmartString::CSmartString(const CSmartString &other)
 
 void CSmartString::operator =(const CSmartString &other)
 {
-	
+	//Only if not selfassignement
 	if(this!= &other) {
+		//Count down original counter
 		(*counter_)--;
 		if((*counter_) == 0)
-				delete str_;
-	}
+			//Delete str_ if original counter reaches 0
+			delete str_;
+		
+		//Assignment to other..
 		counter_ = other.counter_ ;
 		str_ = other.str_;
-    (*counter_)++;
+    		(*counter_)++;
+	}
 }
 
 CSmartString::~CSmartString()
