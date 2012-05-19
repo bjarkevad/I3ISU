@@ -41,7 +41,6 @@ protected:
       handleMsg(m, id);
       delete m;
     }
-    
   }
 
   virtual void preMsgHandler() {}
@@ -71,14 +70,22 @@ class Subscriber : public MessageHandler
 {
 public:
   enum { MAX_MSG_COUNT = 10 };
-  Subscriber(unsigned int id)
-    :  MessageHandler(MAX_MSG_COUNT, ID_TERMINATE), id_(id)
+  Subscriber(unsigned int id = 1)
+    :  MessageHandler(MAX_MSG_COUNT, ID_TERMINATE), id_(id), 
+			 subHelp_("SUBS", getMsgQueue(), ID_HELLO)
+					//We're subscribing to "SUBS" with our own message queues, and expecting messages 					
+					////of type "ID_HELLO"
   {
   }
   
-
 protected:
   // The subscription it self is missing and os is the unsubscription - Where will you put these?
+	void preMsgHandler() 
+	{
+		//Used if no SubscribtionHelper is used
+		//MessageDistributionSystem::getInstance().subscribe("SUBS", getMsgQueue(), id_);
+	}
+
   virtual void handleMsg(osapi::Message*& msg, unsigned long id)
   {
     switch(id)
@@ -100,6 +107,7 @@ private:
     ID_HELLO 
   };
   unsigned int id_;
+	SubscriberHelper subHelp_;
 };
 
 
@@ -151,7 +159,9 @@ private:
   {
     // Send notification...
     OSAPI_LOG_DBG("Sending notification...");
-    
+		HelloMsg* msg = new HelloMsg;
+		msg->data_ = "Hello world!";
+   	MessageDistributionSystem::getInstance().notify<HelloMsg>("SUBS", msg); 
     // When done we need to rearm the timer
     timer_->reArm();
   }
@@ -168,15 +178,18 @@ int main(int argc, char* argv[])
 
   Publisher p;
 
-  Subscriber s1(1), s2(2);
-
+  /*Subscriber s1(1), s2(2);
   s1.start();
-  s2.start();
+  s2.start();*/
   p.start();
 
-  s1.join();
-  s2.join();
+	Subscriber subs[100];
+	for( int i = 0 ; i< 100 ; i++ )
+	{
+		subs[i].start();
+	}
+	
+ /* s1.join();
+  s2.join();*/
   p.join();
-  
-  
 }
