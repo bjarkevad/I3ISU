@@ -26,11 +26,12 @@ void MessageDistributionSystem::unSubscribe(const std::string& msgId,
 	std::cout << "unsubscribe called, searching for: " << msgId << std::endl;
 	SubscriberIdMap::iterator iter = sm_.find(msgId);
 	
-	//If message ID is found
+	//If we did not reach the end of the of the container, meaning that we found something.
+	//It is possible to iterate again, but this should be pointless, since we are only able to subscribe once.
 	if(iter != sm_.end())
 	{
 		std::cout << "Found message ID.." << std::endl;
-		//Get the associated SubscriberIdContainer
+		//Get the associated SubscriberIdContainer (the second item in the list).
 		SubscriberIdContainer& subList = iter->second;
 		//Temp SubscriberId used for comparison
 		details::SubscriberId s(mq, id);
