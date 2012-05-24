@@ -53,12 +53,17 @@ class	MessageDistributionSystem : osapi::Notcopyable
 				for( SubscriberIdContainer::const_iterator iterSubs = subList.begin() ;
 						iterSubs != subList.end() ; ++iterSubs )
 				{
-					M *tmp = new M(*m);
+				// We do not know who owns the original message 'm', so make a dynamically allocated copy that
+				// we own. This ensures that the message is not deleted before receivers have a chance to do anything
+					M *tmp = new M(*m); 
 					iterSubs->send(tmp);
 					std::cout << "Notified a subscriber.." << std::endl;
 				}
 				
 			}
+			//Receivers have their own copy, now it's safe to delete ours.
+			//This approach is used because we do not know when subscribers are finished with the message
+			//so each subscriber takes care of their own memory management. This could be improved with shared_pointers!
 			delete m;
 		}
 		//Singleton
