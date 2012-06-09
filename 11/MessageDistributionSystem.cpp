@@ -1,12 +1,9 @@
 #include    "MessageDistributionSystem.hpp"
 
-void MessageDistributionSystem::subscribe(const std::string& msgId,
-																					osapi::MsgQueue* mq,
-																					unsigned long id)
+void MessageDistributionSystem::subscribe(const std::string& msgId,	osapi::MsgQueue* mq, unsigned long id)
 {
 	osapi::ScopedLock lock(m_);
-	InsertResult ir = sm_.insert(std::make_pair(msgId,
-																SubscriberIdContainer()));
+	InsertResult ir = sm_.insert(std::make_pair(msgId, SubscriberIdContainer()));
 
 	SubscriberIdContainer& s1 = ir.first->second;
 
@@ -17,9 +14,7 @@ void MessageDistributionSystem::subscribe(const std::string& msgId,
 		s1.push_back(s);
 }
 
-void MessageDistributionSystem::unSubscribe(const std::string& msgId,
-																						osapi::MsgQueue* mq,
-																						unsigned long id)
+void MessageDistributionSystem::unSubscribe(const std::string& msgId, osapi::MsgQueue* mq, unsigned long id)
 {
 	osapi::ScopedLock lock(m_);
 	//Search for message ID
