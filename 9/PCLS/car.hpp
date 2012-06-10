@@ -13,7 +13,8 @@ class Car : public osapi::Thread {
 		osapi::MsgQueue _msgQueue;
 
 		Car& operator= (const Car&);
-
+		//This function is created so an array of cars can be created without being initialized
+		//with entry/exit-guard msgqueues
 		void setMqs(osapi::MsgQueue &entryGuard_,
 				osapi::MsgQueue &exitGuard_) 
 		{ 
@@ -25,7 +26,7 @@ class Car : public osapi::Thread {
 		bool running_;
 		bool parked_;
 		unsigned int id_;
-		void MessageHandler(unsigned long _id, osapi::Message *_msg);
+		void handleMsg(osapi::Message *_msg, unsigned long _id);
 		osapi::MsgQueue *entryMq, *exitMq; 
 };
 
@@ -36,10 +37,45 @@ Car::Car() : running_(false),
 
 }
 
-Car::~Car() {
+Car::~Car() 
+{
 	running_ = false;
 }
 
+void Car::run() {
+//Send req msg to entryguard
+//enter
+	running_ = true;
+	while(running_)
+	{
+		unsigned long id;
+		osapi::Message* msg = _msgQueue.receive(id);
+		handleMsg(msg, id);
+		delete msg;
+	}
+
+	//sleep for a while to stay in 
+	//send req msg to exitguard
+	//handlemessage
+	//delete msg;
+	//exit
+	running_ = false;
+}
+
+void handleMsg(osapi::Message *_msg, unsigned long _id)
+{
+	switch ( _id )
+	{
+		case ID_GUARD_ENTRY_CFM :
+			break;
+		case ID_GUARD_EXIT_CFM :
+			break;
+		default :
+			break;
+	}
+}
+
+/*
 void Car::run() {
 
 	running_ = true;
@@ -122,3 +158,4 @@ void Car::MessageHandler(unsigned long _id, osapi::Message *_msg) {
 			break;
 	}
 }
+*/
