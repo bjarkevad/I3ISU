@@ -174,14 +174,14 @@ private:
 
 int main(int argc, char* argv[])
 {
-  OSAPI_LOG_INF("Application starting up...");
+	  OSAPI_LOG_INF("Application starting up...");
 
-  Publisher p;
+	  Publisher p;
  
 	Subscriber s1(1), s2(2);
-  s1.start();
-  s2.start();
-  p.start();
+  	s1.start();
+ 	s2.start();
+ 	p.start();
 
 	/*Subscriber subs[100];
 	for( int i = 0 ; i< 100 ; i++ )
@@ -189,7 +189,7 @@ int main(int argc, char* argv[])
 		subs[i].start();
 	}*/
 	s2.stop();	
-  s1.join();
-  s2.join();
-  p.join();
+	s1.join();
+  	s2.join();
+ 	p.join();
 }

@@ -75,7 +75,7 @@ class	MessageDistributionSystem : osapi::Notcopyable
 	private:
 		MessageDistributionSystem(){}
 
-		typedef std::vector<details::SubscriberId> 						SubscriberIdContainer;
+		typedef std::vector<details::SubscriberId> 				SubscriberIdContainer;
 		typedef std::map<std::string, SubscriberIdContainer> 	SubscriberIdMap;
 		typedef std::pair<SubscriberIdMap::iterator, bool> 		InsertResult;
 
@@ -86,23 +86,13 @@ class	MessageDistributionSystem : osapi::Notcopyable
 class SubscriberHelper : osapi::Notcopyable
 {
 	public:
-		SubscriberHelper(const std::string& msgId,
-											osapi::MsgQueue* mq,
-											unsigned long id) :
-										msgId_(msgId), mq_(mq), id_(id) 
-	{
+		SubscriberHelper(const std::string& msgId, osapi::MsgQueue* mq, unsigned long id) :
+			msgId_(msgId), mq_(mq), id_(id) {
 		MessageDistributionSystem::getInstance().subscribe(msgId_, mq_, id_);
 	}
 
-	void unsubscribe()
-	{
-		MessageDistributionSystem::getInstance().unSubscribe(msgId_, mq_, id_);
-	}
-
-	~SubscriberHelper()
-	{
-		unsubscribe();
-	}
+	void unsubscribe() { MessageDistributionSystem::getInstance().unSubscribe(msgId_, mq_, id_); }
+	~SubscriberHelper() {unsubscribe();}
 
 	private:
 		const std::string 	msgId_;
