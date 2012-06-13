@@ -107,7 +107,7 @@ int main()
 	}
 
 	shmdt(shm);
-    shmctl(shmID, IPC_RMID, 0);
+	shmctl(shmID, IPC_RMID, 0);
 	cout << "Main exiting.." << endl;
 	return 0;
 }
