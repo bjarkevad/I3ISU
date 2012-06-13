@@ -76,9 +76,12 @@ int main()
 	shm->stopped_ = false;
 	shm->dataRdy_ = false;
 
+	//Initialize the mutex as shared and robust
+	//Robust means that the mutex will unlock if locked in a process that dies
 	pthread_mutexattr_t m_att_;
 	pthread_mutexattr_init(&m_att_);
 	pthread_mutexattr_setpshared(&m_att_, PTHREAD_PROCESS_SHARED);
+	pthread_mutexattr_setrobust_np(&m_att_, PTHREAD_MUTEX_ROBUST_NP);
 	pthread_mutex_init(&shm->m_, &m_att_);
 
 	pthread_condattr_t c_att_;
