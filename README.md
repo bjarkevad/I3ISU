@@ -4,7 +4,7 @@ I3ISU
 Exercises from the I3ISU course on IHA.
 Course taken from february to may 2012.
 
-A wiki with exercise explanations can be found here:
+A wiki with exercise explanations can be found here:  
 http://snbisu.wikispaces.com/
 
 Bjarke Vad Andersen  
