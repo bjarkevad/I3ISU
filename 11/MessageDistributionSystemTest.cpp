@@ -60,9 +60,6 @@ struct HelloMsg : public osapi::Message
   std::string data_;
 };
 
-  
-
-
 /**
  * class Subscriber
  */
@@ -99,7 +96,6 @@ protected:
 				subHelp_.unsubscribe();
         break;
     }
-    
   }
   
 private:

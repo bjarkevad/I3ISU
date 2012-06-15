@@ -3,7 +3,15 @@
 void MessageDistributionSystem::subscribe(const std::string& msgId,	osapi::MsgQueue* mq, unsigned long id)
 {
 	osapi::ScopedLock lock(m_);
+	//map::insert returns a pair. 
+	//The first element is the iterator to the newly inserted item
+	//The second element is wether or not the insert was succesful
+	//(A map containers do not allow duplicates)
 	InsertResult ir = sm_.insert(std::make_pair(msgId, SubscriberIdContainer()));
+
+	//return if the insertion was not successfull
+	if(!(ir.second))
+		return;
 
 	SubscriberIdContainer& s1 = ir.first->second;
 

@@ -30,7 +30,7 @@ namespace details
 	};
 }
 
-class	MessageDistributionSystem : osapi::Notcopyable
+class MessageDistributionSystem : osapi::Notcopyable
 {
 	public:
 		void subscribe(const std::string& msgId,
@@ -79,7 +79,7 @@ class	MessageDistributionSystem : osapi::Notcopyable
 		typedef std::map<std::string, SubscriberIdContainer> 	SubscriberIdMap;
 		typedef std::pair<SubscriberIdMap::iterator, bool> 		InsertResult;
 
-		SubscriberIdMap				sm_;
+		SubscriberIdMap			sm_;
 		mutable osapi::Mutex	m_;
 };
 
@@ -95,7 +95,7 @@ class SubscriberHelper : osapi::Notcopyable
 	~SubscriberHelper() {unsubscribe();}
 
 	private:
-		const std::string 	msgId_;
-		osapi::MsgQueue* 		mq_;
-		unsigned long				id_;
+		const std::string	msgId_;
+		osapi::MsgQueue*	mq_;
+		unsigned long		id_;
 };
